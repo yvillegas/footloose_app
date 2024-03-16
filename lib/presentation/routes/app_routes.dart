@@ -15,7 +15,7 @@ Route<dynamic>? generateRoutes(RouteSettings settings) {
       );
     case AppRoutes.productList:
       return MaterialPageRoute<void>(
-        builder: (_) => const ProductList(),
+        builder: (_) => const ProductListPage(),
       );
     default:
       return null;

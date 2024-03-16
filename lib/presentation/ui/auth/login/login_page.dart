@@ -49,6 +49,34 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
+  Future<void> _invalidLogin() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Credenciales Incorrectas'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Verifique que el email y/o la contraseña sean los correctos',
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +84,8 @@ class _LoginViewState extends State<LoginView> {
         listener: (context, state) {
           if (state is SuccessLoginUser) {
             Navigator.pushReplacementNamed(context, AppRoutes.productList);
+          } else if (state is FailureLoginUser) {
+            _invalidLogin();
           }
         },
         child: SingleChildScrollView(
@@ -83,6 +113,9 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 child: TextField(
                   controller: _emailController,
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -93,6 +126,9 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 child: TextField(
                   controller: _passwordController,
+                  decoration: const InputDecoration(
+                    hintText: 'Contraseña',
+                  ),
                   obscureText: true,
                 ),
               ),
