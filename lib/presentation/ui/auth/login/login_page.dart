@@ -4,6 +4,7 @@ import 'package:footloose_app/domain/use_cases/login_user.dart';
 import 'package:footloose_app/domain/use_cases/save_user.dart';
 import 'package:footloose_app/injection/injection.dart';
 import 'package:footloose_app/presentation/blocs/auth_bloc/auth_bloc.dart';
+import 'package:footloose_app/presentation/routes/app_routes.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -54,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is SuccessLoginUser) {
-            // TODO: Add navigation
+            Navigator.pushReplacementNamed(context, AppRoutes.productList);
           }
         },
         child: SingleChildScrollView(
