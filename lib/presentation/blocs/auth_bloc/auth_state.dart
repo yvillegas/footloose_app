@@ -17,14 +17,10 @@ class LoadingLoginUser extends AuthState {
 }
 
 class SuccessLoginUser extends AuthState {
-  const SuccessLoginUser({
-    required this.authResponse,
-  });
-
-  final AuthResponse authResponse;
+  const SuccessLoginUser();
 
   @override
-  List<Object> get props => [authResponse];
+  List<Object> get props => [];
 }
 
 class FailureLoginUser extends AuthState {

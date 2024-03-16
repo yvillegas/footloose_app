@@ -21,4 +21,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(RequestFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> saveUser(AuthResponse authResponse) async {
+    try {
+      final saved = await authDataSource.saveUser(authResponse);
+      return Right(saved);
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
 }

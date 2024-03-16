@@ -28,7 +28,6 @@ class RequestBuilder {
         case RequestType.get:
           return await httpClient.get(url, headers: headers);
         case RequestType.post:
-          print(body);
           return await httpClient.post(
             url,
             headers: headers,

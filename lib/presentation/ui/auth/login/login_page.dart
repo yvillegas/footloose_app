@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:footloose_app/domain/use_cases/login_user.dart';
+import 'package:footloose_app/domain/use_cases/save_user.dart';
 import 'package:footloose_app/injection/injection.dart';
 import 'package:footloose_app/presentation/blocs/auth_bloc/auth_bloc.dart';
 
@@ -12,6 +13,7 @@ class LoginPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => AuthBloc(
         loginUser: getIt<LoginUser>(),
+        saveUser: getIt<SaveUser>(),
       ),
       child: const LoginView(),
     );
@@ -61,11 +63,14 @@ class _LoginViewState extends State<LoginView> {
             children: [
               const SafeArea(
                 bottom: false,
-                child: CircleAvatar(
-                  maxRadius: 30,
-                  child: Icon(
-                    Icons.person,
-                    size: 50,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 30),
+                  child: CircleAvatar(
+                    maxRadius: 30,
+                    child: Icon(
+                      Icons.person,
+                      size: 50,
+                    ),
                   ),
                 ),
               ),
@@ -87,6 +92,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 child: TextField(
                   controller: _passwordController,
+                  obscureText: true,
                 ),
               ),
               const SizedBox(height: 30),

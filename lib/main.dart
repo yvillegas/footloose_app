@@ -3,6 +3,7 @@ import 'package:footloose_app/injection/injection.dart';
 import 'package:footloose_app/presentation/routes/app_routes.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await init();
   runApp(const FootlooseApp());
 }
