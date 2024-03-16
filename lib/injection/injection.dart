@@ -1,7 +1,11 @@
 import 'package:footloose_app/core/request_builder.dart';
 import 'package:footloose_app/data/data_sources/auth_data_source.dart';
+import 'package:footloose_app/data/data_sources/product_data_source.dart';
 import 'package:footloose_app/data/repositories/auth_repository_impl.dart';
+import 'package:footloose_app/data/repositories/product_repository_impl.dart';
 import 'package:footloose_app/domain/repositories/auth_repository.dart';
+import 'package:footloose_app/domain/repositories/product_repository.dart';
+import 'package:footloose_app/domain/use_cases/get_products.dart';
 import 'package:footloose_app/domain/use_cases/login_user.dart';
 import 'package:footloose_app/domain/use_cases/save_user.dart';
 import 'package:get_it/get_it.dart';
@@ -22,6 +26,11 @@ Future<void> init() async {
       getIt<AuthRepository>(),
     ),
   );
+  getIt.registerLazySingleton<GetProducts>(
+    () => GetProducts(
+      getIt<ProductRepository>(),
+    ),
+  );
 
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
@@ -30,11 +39,22 @@ Future<void> init() async {
     ),
   );
 
+  getIt.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(
+      productDataSource: getIt<ProductDataSource>(),
+    ),
+  );
+
   // Datasource
   getIt.registerLazySingleton<AuthDataSource>(
     () => AuthDataSourceImpl(
       requestBuilder: getIt<RequestBuilder>(),
       sharedPreferences: getIt<SharedPreferences>(),
+    ),
+  );
+  getIt.registerLazySingleton<ProductDataSource>(
+    () => ProductDataSourceImpl(
+      requestBuilder: getIt<RequestBuilder>(),
     ),
   );
 
@@ -47,6 +67,7 @@ Future<void> init() async {
   getIt.registerLazySingleton<RequestBuilder>(
     () => RequestBuilder(
       httpClient: getIt(),
+      sharedPreferences: getIt<SharedPreferences>(),
     ),
   );
 }

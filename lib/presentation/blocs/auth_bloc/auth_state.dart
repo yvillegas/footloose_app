@@ -14,6 +14,9 @@ class AuthInitial extends AuthState {
 // LoginUser
 class LoadingLoginUser extends AuthState {
   const LoadingLoginUser();
+
+  @override
+  List<Object> get props => [];
 }
 
 class SuccessLoginUser extends AuthState {
@@ -25,4 +28,7 @@ class SuccessLoginUser extends AuthState {
 
 class FailureLoginUser extends AuthState {
   const FailureLoginUser();
+
+  @override
+  List<Object> get props => [];
 }
