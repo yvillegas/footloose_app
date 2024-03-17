@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:footloose_app/domain/models/brand.dart';
@@ -16,9 +19,12 @@ import 'package:footloose_app/presentation/blocs/color_bloc/color_bloc.dart';
 import 'package:footloose_app/presentation/blocs/model_bloc/model_bloc.dart';
 import 'package:footloose_app/presentation/blocs/product_list/product_list_bloc.dart';
 import 'package:footloose_app/presentation/blocs/size_bloc/size_bloc.dart';
+import 'package:footloose_app/presentation/routes/app_routes.dart';
+import 'package:footloose_app/presentation/ui/products/product_detail/product_detail_page.dart';
 import 'package:footloose_app/presentation/ui/products/product_list/widgets/empty_products.dart';
 import 'package:footloose_app/presentation/ui/products/product_list/widgets/failure_products.dart';
 import 'package:footloose_app/presentation/ui/products/product_list/widgets/product_list_item.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ProductListPage extends StatelessWidget {
   const ProductListPage({super.key});
@@ -397,7 +403,25 @@ class _ProductListState extends State<ProductList> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.qr_code),
-        onPressed: () {},
+        onPressed: () async {
+          final productoId = await Navigator.push(
+            context,
+            MaterialPageRoute<int>(
+              builder: (context) => const QRContainer(),
+            ),
+          );
+          if (productoId != null) {
+            unawaited(
+              Navigator.pushNamed(
+                context,
+                AppRoutes.productDetail,
+                arguments: ProductDetailPageArguments(
+                  productoId: productoId,
+                ),
+              ),
+            );
+          }
+        },
       ),
       body: MultiBlocListener(
         listeners: [
@@ -474,6 +498,43 @@ class _ProductListState extends State<ProductList> {
           },
         ),
       ),
+    );
+  }
+}
+
+class QRContainer extends StatefulWidget {
+  const QRContainer({super.key});
+
+  @override
+  State<QRContainer> createState() => _QRContainerState();
+}
+
+class _QRContainerState extends State<QRContainer> {
+  QRViewController? _controller;
+  final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      _controller = controller;
+      _controller?.scannedDataStream.listen((scanData) {
+        final body = json.decode(scanData.code ?? '') as Map<String, dynamic>;
+        Navigator.pop(context, body['idProducto']);
+        _controller?.dispose();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return QRView(
+      key: _qrKey,
+      onQRViewCreated: _onQRViewCreated,
     );
   }
 }
