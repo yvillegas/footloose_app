@@ -62,4 +62,14 @@ class ProductRepositoryImpl implements ProductRepository {
       return Left(CacheFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Product>> getProduct(int id) async {
+    try {
+      final product = await productDataSource.getProduct(id);
+      return Right(product);
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
 }

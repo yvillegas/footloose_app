@@ -12,4 +12,5 @@ abstract class ProductRepository {
   Future<Either<Failure, List<Model>>> getModels();
   Future<Either<Failure, List<Color>>> getColors();
   Future<Either<Failure, List<Size>>> getSizes();
+  Future<Either<Failure, Product>> getProduct(int id);
 }

@@ -8,6 +8,7 @@ import 'package:footloose_app/domain/repositories/product_repository.dart';
 import 'package:footloose_app/domain/use_cases/get_brands.dart';
 import 'package:footloose_app/domain/use_cases/get_colors.dart';
 import 'package:footloose_app/domain/use_cases/get_models.dart';
+import 'package:footloose_app/domain/use_cases/get_product.dart';
 import 'package:footloose_app/domain/use_cases/get_products.dart';
 import 'package:footloose_app/domain/use_cases/get_sizes.dart';
 import 'package:footloose_app/domain/use_cases/login_user.dart';
@@ -55,6 +56,12 @@ Future<void> init() async {
       getIt<ProductRepository>(),
     ),
   );
+  getIt.registerLazySingleton<GetProduct>(
+    () => GetProduct(
+      getIt<ProductRepository>(),
+    ),
+  );
+
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(

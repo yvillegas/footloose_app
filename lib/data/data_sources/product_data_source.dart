@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:footloose_app/core/error/exceptions.dart';
 import 'package:footloose_app/core/request_builder.dart';
 import 'package:footloose_app/domain/models/brand.dart';
@@ -12,6 +14,7 @@ abstract class ProductDataSource {
   Future<List<Model>> getModels();
   Future<List<Color>> getColors();
   Future<List<Size>> getSizes();
+  Future<Product> getProduct(int id);
 }
 
 class ProductDataSourceImpl implements ProductDataSource {
@@ -105,6 +108,25 @@ class ProductDataSourceImpl implements ProductDataSource {
     if (response.statusCode == 200) {
       final sizes = sizeFromJson(response.body);
       return sizes;
+    } else {
+      throw RequestException();
+    }
+  }
+
+  @override
+  Future<Product> getProduct(int id) async {
+    final endpoint = '/api/producto/show/$id';
+
+    final response = await requestBuilder.request(
+      endpoint,
+      RequestType.get,
+      withAuthentication: true,
+    );
+
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      final product = Product.fromJson(body as Map<String, dynamic>);
+      return product;
     } else {
       throw RequestException();
     }
