@@ -20,7 +20,7 @@ class ProductListItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 height: 70,
                 width: 70,
                 child: Image.network(
