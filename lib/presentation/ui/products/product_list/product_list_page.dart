@@ -24,6 +24,7 @@ import 'package:footloose_app/presentation/ui/products/product_detail/product_de
 import 'package:footloose_app/presentation/ui/products/product_list/widgets/empty_products.dart';
 import 'package:footloose_app/presentation/ui/products/product_list/widgets/failure_products.dart';
 import 'package:footloose_app/presentation/ui/products/product_list/widgets/product_list_item.dart';
+import 'package:footloose_app/presentation/ui/products/product_list/widgets/shopping_cart_action.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ProductListPage extends StatelessWidget {
@@ -353,52 +354,57 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
+  Widget _filterMenu() {
+    return PopupMenuButton(
+      onSelected: (value) {
+        if (value == 'Marca') {
+          _showBrands();
+        }
+        if (value == 'Modelo') {
+          _showModels();
+        }
+        if (value == 'Color') {
+          _showColors();
+        }
+        if (value == 'Talla') {
+          _showSizes();
+        }
+      },
+      itemBuilder: (BuildContext context) {
+        return const [
+          PopupMenuItem(
+            value: 'Modelo',
+            child: Text('Modelo'),
+          ),
+          PopupMenuItem(
+            value: 'Marca',
+            child: Text('Marca'),
+          ),
+          PopupMenuItem(
+            value: 'Color',
+            child: Text('Color'),
+          ),
+          PopupMenuItem(
+            value: 'Talla',
+            child: Text('Talla'),
+          ),
+          PopupMenuItem(
+            value: 'Precio',
+            child: Text('Precio'),
+          )
+        ];
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Productos'),
         actions: [
-          PopupMenuButton(
-            onSelected: (value) {
-              if (value == 'Marca') {
-                _showBrands();
-              }
-              if (value == 'Modelo') {
-                _showModels();
-              }
-              if (value == 'Color') {
-                _showColors();
-              }
-              if (value == 'Talla') {
-                _showSizes();
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return const [
-                PopupMenuItem(
-                  value: 'Modelo',
-                  child: Text('Modelo'),
-                ),
-                PopupMenuItem(
-                  value: 'Marca',
-                  child: Text('Marca'),
-                ),
-                PopupMenuItem(
-                  value: 'Color',
-                  child: Text('Color'),
-                ),
-                PopupMenuItem(
-                  value: 'Talla',
-                  child: Text('Talla'),
-                ),
-                PopupMenuItem(
-                  value: 'Precio',
-                  child: Text('Precio'),
-                )
-              ];
-            },
-          ),
+          const ShoppingCartAction(),
+          _filterMenu(),
         ],
       ),
       floatingActionButton: FloatingActionButton(

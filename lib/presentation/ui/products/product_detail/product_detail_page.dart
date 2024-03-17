@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:footloose_app/domain/use_cases/get_product.dart';
 import 'package:footloose_app/injection/injection.dart';
 import 'package:footloose_app/presentation/blocs/product_detail_bloc/product_detail_bloc.dart';
+import 'package:footloose_app/presentation/blocs/shopping_cart/shopping_cart_bloc.dart';
 import 'package:footloose_app/presentation/ui/products/product_detail/widgets/product_detail_section.dart';
 
 class ProductDetailPageArguments {
@@ -46,6 +47,7 @@ class ProductDetailView extends StatefulWidget {
 
 class _ProductDetailViewState extends State<ProductDetailView> {
   late ProductDetailBloc _productDetailBloc;
+  late ShoppingCartBloc _shoppingCartBloc;
 
   int _total = 0;
 
@@ -53,6 +55,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
   void initState() {
     super.initState();
     _productDetailBloc = context.read<ProductDetailBloc>();
+    _shoppingCartBloc = context.read<ShoppingCartBloc>();
 
     _productDetailBloc.add(OnGetProduct(id: widget.id));
   }
@@ -158,7 +161,17 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
                             ),
-                            onPressed: _total > 0 ? () {} : null,
+                            onPressed: _total > 0
+                                ? () {
+                                    _shoppingCartBloc.add(
+                                      OnAddProduct(
+                                        product: product,
+                                        total: _total,
+                                      ),
+                                    );
+                                    Navigator.pop(context);
+                                  }
+                                : null,
                             child: const Text('Agregar al carrito'),
                           ),
                         ],
