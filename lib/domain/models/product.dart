@@ -28,7 +28,7 @@ class Product {
         idProducto: json['idProducto'] as int,
         nombreProducto: json['nombreProducto'] as String,
         imagenProducto: json['imagenProducto'] as String,
-        precioProducto: json['precioProducto'] as String,
+        precioProducto: double.parse(json['precioProducto'] as String),
         nombreMarca: json['nombreMarca'] as String,
         nombreModelo: json['nombreModelo'] as String,
         nombreTalla: json['nombreTalla'] as String,
@@ -42,7 +42,7 @@ class Product {
   int idProducto;
   String nombreProducto;
   String imagenProducto;
-  String precioProducto;
+  double precioProducto;
   String nombreMarca;
   String nombreModelo;
   String nombreTalla;

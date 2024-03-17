@@ -92,6 +92,8 @@ class _ProductListState extends State<ProductList> {
   var _products = <Product>[];
   var _filteredProducts = <Product>[];
 
+  RangeValues _rangePrices = const RangeValues(0, 1000);
+
   @override
   void initState() {
     super.initState();
@@ -219,6 +221,13 @@ class _ProductListState extends State<ProductList> {
             .where((product) => product.idTalla == _selectedSize!.idTalla)
             .toList();
       }
+      _filteredProducts = _filteredProducts
+          .where(
+            (product) =>
+                _rangePrices.start.round() <= product.precioProducto &&
+                product.precioProducto <= _rangePrices.end.round(),
+          )
+          .toList();
     });
   }
 
@@ -226,7 +235,7 @@ class _ProductListState extends State<ProductList> {
     if (_selectedBrand == null &&
         _selectedModel == null &&
         _selectedSize == null &&
-        _selectedSize == null) {
+        _selectedColor == null) {
       return Container();
     }
 
@@ -297,6 +306,47 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
+  Widget _priceRangeFilter() {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Rango de Precio S/(${_rangePrices.start.round()} - ${_rangePrices.end.round()}) ',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Row(
+            children: [
+              const Text('S/0'),
+              Expanded(
+                child: RangeSlider(
+                  values: _rangePrices,
+                  max: 1000,
+                  divisions: 1000,
+                  labels: RangeLabels(
+                    _rangePrices.start.round().toString(),
+                    _rangePrices.end.round().toString(),
+                  ),
+                  onChanged: (RangeValues values) {
+                    setState(() {
+                      _rangePrices = values;
+                      _filterProducts();
+                    });
+                  },
+                ),
+              ),
+              const Text('S/1000'),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -335,6 +385,10 @@ class _ProductListState extends State<ProductList> {
                 PopupMenuItem(
                   value: 'Talla',
                   child: Text('Talla'),
+                ),
+                PopupMenuItem(
+                  value: 'Precio',
+                  child: Text('Precio'),
                 )
               ];
             },
@@ -395,6 +449,7 @@ class _ProductListState extends State<ProductList> {
                 child: Column(
                   children: [
                     _filterSection(),
+                    _priceRangeFilter(),
                     if (_filteredProducts.isEmpty)
                       const EmptyProducts()
                     else

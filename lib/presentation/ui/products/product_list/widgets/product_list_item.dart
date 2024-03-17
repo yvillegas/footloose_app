@@ -51,7 +51,7 @@ class ProductListItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          product.precioProducto,
+                          'S/${product.precioProducto}',
                         )
                       ],
                     ),
