@@ -18,6 +18,10 @@ class Product {
     required this.nombreModelo,
     required this.nombreTalla,
     required this.nombreColor,
+    required this.idMarca,
+    required this.idModelo,
+    required this.idColor,
+    required this.idTalla,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -29,6 +33,10 @@ class Product {
         nombreModelo: json['nombreModelo'] as String,
         nombreTalla: json['nombreTalla'] as String,
         nombreColor: json['nombreColor'] as String,
+        idMarca: json['idMarca'] as int,
+        idModelo: json['idModelo'] as int,
+        idColor: json['idColor'] as int,
+        idTalla: json['idTalla'] as int,
       );
 
   int idProducto;
@@ -39,4 +47,8 @@ class Product {
   String nombreModelo;
   String nombreTalla;
   String nombreColor;
+  int idMarca;
+  int idModelo;
+  int idColor;
+  int idTalla;
 }

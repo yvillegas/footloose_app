@@ -5,7 +5,11 @@ import 'package:footloose_app/data/repositories/auth_repository_impl.dart';
 import 'package:footloose_app/data/repositories/product_repository_impl.dart';
 import 'package:footloose_app/domain/repositories/auth_repository.dart';
 import 'package:footloose_app/domain/repositories/product_repository.dart';
+import 'package:footloose_app/domain/use_cases/get_brands.dart';
+import 'package:footloose_app/domain/use_cases/get_colors.dart';
+import 'package:footloose_app/domain/use_cases/get_models.dart';
 import 'package:footloose_app/domain/use_cases/get_products.dart';
+import 'package:footloose_app/domain/use_cases/get_sizes.dart';
 import 'package:footloose_app/domain/use_cases/login_user.dart';
 import 'package:footloose_app/domain/use_cases/save_user.dart';
 import 'package:get_it/get_it.dart';
@@ -31,7 +35,26 @@ Future<void> init() async {
       getIt<ProductRepository>(),
     ),
   );
-
+  getIt.registerLazySingleton<GetBrands>(
+    () => GetBrands(
+      getIt<ProductRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<GetModels>(
+    () => GetModels(
+      getIt<ProductRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<GetColors>(
+    () => GetColors(
+      getIt<ProductRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<GetSizes>(
+    () => GetSizes(
+      getIt<ProductRepository>(),
+    ),
+  );
   // Repository
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(

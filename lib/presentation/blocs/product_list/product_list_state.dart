@@ -9,7 +9,7 @@ sealed class ProductListState extends Equatable {
 
 class ProductListInitial extends ProductListState {}
 
-// LoginUser
+// GetProducts
 class LoadingGetProducts extends ProductListState {
   const LoadingGetProducts();
 
