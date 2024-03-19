@@ -44,6 +44,7 @@ class RequestBuilder {
           );
       }
     } catch (e) {
+      print(e);
       throw RequestException();
     }
   }

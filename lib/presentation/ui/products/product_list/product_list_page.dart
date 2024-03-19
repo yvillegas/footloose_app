@@ -388,10 +388,6 @@ class _ProductListState extends State<ProductList> {
             value: 'Talla',
             child: Text('Talla'),
           ),
-          PopupMenuItem(
-            value: 'Precio',
-            child: Text('Precio'),
-          )
         ];
       },
     );

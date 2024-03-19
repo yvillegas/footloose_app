@@ -30,3 +30,10 @@ class OnRemoveProduct extends ShoppingCartEvent {
   @override
   List<Object> get props => [index];
 }
+
+class OnSaveShoppingCart extends ShoppingCartEvent {
+  const OnSaveShoppingCart();
+
+  @override
+  List<Object> get props => [];
+}

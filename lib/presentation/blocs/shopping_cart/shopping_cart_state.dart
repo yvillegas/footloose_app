@@ -31,3 +31,24 @@ class LoadedShoppingCart extends ShoppingCartState {
   @override
   List<Object> get props => [];
 }
+
+class LoadingSaveShoppingCart extends ShoppingCartState {
+  const LoadingSaveShoppingCart();
+
+  @override
+  List<Object> get props => [];
+}
+
+class SuccessSaveShoppingCart extends ShoppingCartState {
+  const SuccessSaveShoppingCart();
+
+  @override
+  List<Object> get props => [];
+}
+
+class FailureSaveShoppingCart extends ShoppingCartState {
+  const FailureSaveShoppingCart();
+
+  @override
+  List<Object> get props => [];
+}

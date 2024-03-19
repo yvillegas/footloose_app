@@ -11,15 +11,46 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
+  late ShoppingCartBloc _shoppingCartBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _shoppingCartBloc = context.read<ShoppingCartBloc>();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Carrito'),
       ),
-      body: BlocBuilder<ShoppingCartBloc, ShoppingCartState>(
+      body: BlocConsumer<ShoppingCartBloc, ShoppingCartState>(
+        listener: (context, state) {
+          if (state is SuccessSaveShoppingCart) {
+            Navigator.pop(context);
+            final snackBar = SnackBar(
+              content: const Text('Compra Realizada!'),
+              action: SnackBarAction(
+                label: 'Cerrar',
+                onPressed: () {
+                  // Some code to undo the change.
+                },
+              ),
+            );
+
+            // Find the ScaffoldMessenger in the widget tree
+            // and use it to show a SnackBar.
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
         builder: (context, state) {
-          if (state is LoadedShoppingCart) {
+          if (state is LoadingSaveShoppingCart ||
+              state is LoadingShoppingCart) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is LoadedShoppingCart) {
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -36,7 +67,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      _shoppingCartBloc.add(const OnSaveShoppingCart());
                     },
                     child: const Text('Comprar'),
                   ),

@@ -4,6 +4,7 @@ import 'package:footloose_app/domain/models/brand.dart';
 import 'package:footloose_app/domain/models/color.dart';
 import 'package:footloose_app/domain/models/model.dart';
 import 'package:footloose_app/domain/models/product.dart';
+import 'package:footloose_app/domain/models/shopping_cart.dart';
 import 'package:footloose_app/domain/models/size.dart';
 
 abstract class ProductRepository {
@@ -13,4 +14,7 @@ abstract class ProductRepository {
   Future<Either<Failure, List<Color>>> getColors();
   Future<Either<Failure, List<Size>>> getSizes();
   Future<Either<Failure, Product>> getProduct(int id);
+  Future<Either<Failure, bool>> saveShoppingCart(
+    List<ShoppingCartProduct> products,
+  );
 }

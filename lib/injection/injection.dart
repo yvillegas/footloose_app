@@ -12,6 +12,7 @@ import 'package:footloose_app/domain/use_cases/get_product.dart';
 import 'package:footloose_app/domain/use_cases/get_products.dart';
 import 'package:footloose_app/domain/use_cases/get_sizes.dart';
 import 'package:footloose_app/domain/use_cases/login_user.dart';
+import 'package:footloose_app/domain/use_cases/save_shopping_cart.dart';
 import 'package:footloose_app/domain/use_cases/save_user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -58,6 +59,11 @@ Future<void> init() async {
   );
   getIt.registerLazySingleton<GetProduct>(
     () => GetProduct(
+      getIt<ProductRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<SaveShoppingCart>(
+    () => SaveShoppingCart(
       getIt<ProductRepository>(),
     ),
   );

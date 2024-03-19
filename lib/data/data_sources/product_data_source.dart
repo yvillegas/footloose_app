@@ -6,6 +6,7 @@ import 'package:footloose_app/domain/models/brand.dart';
 import 'package:footloose_app/domain/models/color.dart';
 import 'package:footloose_app/domain/models/model.dart';
 import 'package:footloose_app/domain/models/product.dart';
+import 'package:footloose_app/domain/models/shopping_cart.dart';
 import 'package:footloose_app/domain/models/size.dart';
 
 abstract class ProductDataSource {
@@ -15,6 +16,7 @@ abstract class ProductDataSource {
   Future<List<Color>> getColors();
   Future<List<Size>> getSizes();
   Future<Product> getProduct(int id);
+  Future<bool> saveShoppingCart(List<ShoppingCartProduct> products);
 }
 
 class ProductDataSourceImpl implements ProductDataSource {
@@ -127,6 +129,36 @@ class ProductDataSourceImpl implements ProductDataSource {
       final body = json.decode(response.body);
       final product = Product.fromJson(body as Map<String, dynamic>);
       return product;
+    } else {
+      throw RequestException();
+    }
+  }
+
+  @override
+  Future<bool> saveShoppingCart(List<ShoppingCartProduct> products) async {
+    const endpoint = '/api/carrito/add';
+
+    final items = <Map<String, dynamic>>[];
+
+    for (final product in products) {
+      items.add({
+        'idProducto': product.product.idProducto,
+        'cantidad': product.total,
+        'precio': product.product.precioProducto
+      });
+    }
+
+    final body = {'idUsuario': '1', 'productos': items};
+
+    final response = await requestBuilder.request(
+      endpoint,
+      RequestType.post,
+      withAuthentication: true,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      return true;
     } else {
       throw RequestException();
     }

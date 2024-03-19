@@ -5,6 +5,7 @@ import 'package:footloose_app/domain/models/brand.dart';
 import 'package:footloose_app/domain/models/color.dart';
 import 'package:footloose_app/domain/models/model.dart';
 import 'package:footloose_app/domain/models/product.dart';
+import 'package:footloose_app/domain/models/shopping_cart.dart';
 import 'package:footloose_app/domain/models/size.dart';
 import 'package:footloose_app/domain/repositories/product_repository.dart';
 
@@ -68,6 +69,18 @@ class ProductRepositoryImpl implements ProductRepository {
     try {
       final product = await productDataSource.getProduct(id);
       return Right(product);
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> saveShoppingCart(
+    List<ShoppingCartProduct> products,
+  ) async {
+    try {
+      final saved = await productDataSource.saveShoppingCart(products);
+      return Right(saved);
     } catch (e) {
       return Left(CacheFailure());
     }
