@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:footloose_app/core/variables.dart';
 import 'package:footloose_app/domain/models/product.dart';
 import 'package:footloose_app/presentation/routes/app_routes.dart';
 import 'package:footloose_app/presentation/ui/products/product_detail/product_detail_page.dart';
@@ -35,7 +36,7 @@ class ProductListItem extends StatelessWidget {
                   height: 70,
                   width: 70,
                   child: Image.network(
-                    'http://192.168.0.12:3000/img/${product.imagenProducto}',
+                    '${Variables.baseImageURL}/${product.imagenProducto}',
                   ),
                 ),
                 const SizedBox(width: 10),

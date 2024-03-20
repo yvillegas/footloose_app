@@ -1,4 +1,3 @@
-import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:footloose_app/domain/models/product.dart';

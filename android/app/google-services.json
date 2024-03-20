@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "960315180661",
+    "project_id": "footloseapp",
+    "storage_bucket": "footloseapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960315180661:android:bd85948920225e19c49a3c",
+        "android_client_info": {
+          "package_name": "com.footloose.footloose_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhLG_nKIJ7vWJ7fDP3B96b2Wp70D9hm0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

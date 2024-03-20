@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:footloose_app/core/variables.dart';
 import 'package:footloose_app/domain/use_cases/get_product.dart';
 import 'package:footloose_app/injection/injection.dart';
 import 'package:footloose_app/presentation/blocs/product_detail_bloc/product_detail_bloc.dart';
@@ -94,7 +95,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     height: 100,
                     width: 100,
                     child: Image.network(
-                      'http://192.168.0.12:3000/img/${product.imagenProducto}',
+                      '${Variables.baseImageURL}/${product.imagenProducto}',
                     ),
                   ),
                   const SizedBox(height: 20),

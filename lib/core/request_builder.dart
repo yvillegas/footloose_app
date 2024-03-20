@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:footloose_app/core/error/exceptions.dart';
 import 'package:footloose_app/core/shared_preferences_key.dart';
+import 'package:footloose_app/core/variables.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,8 +23,8 @@ class RequestBuilder {
     Map<String, dynamic>? body,
     bool withAuthentication = false,
   }) async {
-    const apiHost = '192.168.0.12:3000';
-    final url = Uri.http(apiHost, endpoint);
+    const apiHost = Variables.baseURL;
+    final url = Uri.https(apiHost, endpoint);
     try {
       final headers = {
         'Content-Type': 'application/json',
@@ -33,18 +34,19 @@ class RequestBuilder {
         final token = sharedPreferences.getString(Preferences.token) ?? '';
         headers.addAll({'x-token': token});
       }
+
       switch (requestType) {
         case RequestType.get:
           return await httpClient.get(url, headers: headers);
         case RequestType.post:
-          return await httpClient.post(
+          final response = await httpClient.post(
             url,
             headers: headers,
             body: json.encode(body),
           );
+          return response;
       }
     } catch (e) {
-      print(e);
       throw RequestException();
     }
   }

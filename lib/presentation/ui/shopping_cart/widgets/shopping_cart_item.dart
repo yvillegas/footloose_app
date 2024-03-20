@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:footloose_app/core/variables.dart';
 import 'package:footloose_app/domain/models/shopping_cart.dart';
 import 'package:footloose_app/presentation/blocs/shopping_cart/shopping_cart_bloc.dart';
 
@@ -39,7 +40,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
             height: 70,
             width: 70,
             child: Image.network(
-              'http://192.168.0.12:3000/img/${widget.shoppingProduct.product.imagenProducto}',
+              '${Variables.baseImageURL}/${widget.shoppingProduct.product.imagenProducto}',
             ),
           ),
           const SizedBox(width: 10),

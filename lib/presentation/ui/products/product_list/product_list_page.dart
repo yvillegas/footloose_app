@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:footloose_app/core/variables.dart';
 import 'package:footloose_app/domain/models/brand.dart';
 import 'package:footloose_app/domain/models/color.dart';
 import 'package:footloose_app/domain/models/model.dart';
@@ -115,6 +117,14 @@ class _ProductListState extends State<ProductList> {
     _modelBloc.add(const OnGetModels());
     _colorBloc.add(const OnGetColors());
     _sizeBloc.add(const OnGetSizes());
+
+    _connectToTopic();
+  }
+
+  void _connectToTopic() {
+    final messaging = FirebaseMessaging.instance;
+
+    messaging.subscribeToTopic(Variables.messagingTopic);
   }
 
   void _showBrands() {
